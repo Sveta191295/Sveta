@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\UserRegistration;
 use App\Http\Controllers\CookieController;
+use App\Http\Controllers\SessionController;
+use App\Http\Controllers\ValidationController;
 use Illuminate\http\Request;
 /*
 |--------------------------------------------------------------------------
@@ -162,4 +164,32 @@ Route::get('/greeting', function () {
     'name' => 'James'
     ]);
 });
+
+
+
+
+Route::get('blade', function () {
+    return view('child');
+    });
+
+
+Route::get('blade', function () {
+    return view('child',['name' => 'Samantha']);
+    });
+
+    Route::get('blade', function () {
+        return view('child',['records' => [1,2,3]]);
+        });
     
+
+Route::get('session/get', [SessionController::class,
+'accessSessionData']);
+Route::get('session/set', [SessionController::class,
+    'storeSessionData']);
+Route::get('session/remove', [SessionController::class,
+    'deleteSessionData']);
+
+
+Route::get('validation', [ValidationController::class,'showform']);
+Route::post('validation', [ValidationController::class,'validateform']);
+        
