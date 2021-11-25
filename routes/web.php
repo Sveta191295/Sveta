@@ -192,4 +192,12 @@ Route::get('session/remove', [SessionController::class,
 
 Route::get('validation', [ValidationController::class,'showform']);
 Route::post('validation', [ValidationController::class,'validateform']);
+
+
+
+Route::get('blade', function () {
+    return view('array',['arr' => [1,2,3]]);
+    });
         
+
+Route::get('/abc', [\App\Http\Controllers\ABCController::class, 'index']);
