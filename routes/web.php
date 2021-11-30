@@ -1,11 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\UserRegistration;
 use App\Http\Controllers\CookieController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\ValidationController;
+use App\Http\Controllers\CollectionController;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\http\Request;
 /*
 |--------------------------------------------------------------------------
@@ -201,3 +204,78 @@ Route::get('blade', function () {
         
 
 Route::get('/abc', [\App\Http\Controllers\ABCController::class, 'index']);
+
+
+
+Route::get('/cache_set', function(){
+    Cache::put('cachekey', 'I am in the cache!', 60 );
+});//1 rope heto jnjvuma cache-y
+
+
+Route::get('/cache_get', function(){
+    return Cache::get('cachekey', 'default value' );
+});
+
+
+Route::get('/cache_forever', function() {
+    Cache::forever('cachekey', 'I am in the cache!' );
+});//cache-y pahpanvum e yndmisht
+
+
+Route::get('/cache_get', function(){
+    if (Cache::has('cachekey')) {
+        return Cache::get('cachekey');
+        }
+});
+
+Route::get('/cache_forever', function() {
+    Cache::forever('cachekey', 'I am in the cache!' );
+    Cache::forget('cachekey');
+}); //jnjuma cache-y miangamic
+
+
+Route::get(
+    'collect1',
+    [CollectionController::class, 'collection_class']);
+
+
+Route::get(
+    'collect2',
+    [CollectionController::class,'collect_method']
+    );
+
+
+
+Route::get(
+    'src_collection', 
+    [CollectionController::class,'search_data']        
+);
+
+Route::get(
+    'filter_collection',
+    [CollectionController::class,'filter_data']
+);
+
+
+
+Route::get(
+    'sort_collection',
+    [CollectionController::class, 'sort_data']
+    );
+
+
+Route::get(
+    'key_collection',
+    [CollectionController::class,'read_keys']        
+);
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

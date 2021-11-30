@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Flight;
+use Illuminate\Support\Facades\Auth;
+
 
 class ABCController extends Controller
 {
@@ -195,7 +197,9 @@ class ABCController extends Controller
             $flight->save();
 
 
-
+            $user = Auth::user();
+            echo $user->name;
+            
 
 
 
