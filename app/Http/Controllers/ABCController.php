@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Flight;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Models\Order;
+
 
 
 class ABCController extends Controller
@@ -177,29 +180,37 @@ class ABCController extends Controller
             // ->get();
 
 
-            $flight = Flight::first();
-            $flight->number = 'FR 456';
-            $flight->refresh();
+            // $flight = Flight::first();
+            // $flight->number = 'FR 456';
+            // $flight->refresh();
 
 
 
-            $flights = Flight::find(1);
+            // $flights = Flight::find(1);
 
-            // echo $flights. "<br>";
+            // // echo $flights. "<br>";
 
-            foreach ($flights as $flight) {
-                echo $flight->name . "<br>";
-            }
-
-
-            $flights = new Flight();
-            $flight->name = "aaaa";
-            $flight->save();
+            // foreach ($flights as $flight) {
+            //     echo $flight->name . "<br>";
+            // }
 
 
-            $user = Auth::user();
-            echo $user->name;
+            // $flights = new Flight();
+            // $flight->name = "aaaa";
+            // $flight->save();
+
+
+            // $user = Auth::user();
+            // echo $user->name;
             
+
+
+            // $account = User::find(1)->account;
+            // dd($account->toArray());
+
+
+            $user = Order::find(3)->user;
+            dd($user->toArray());
 
 
 

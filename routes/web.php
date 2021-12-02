@@ -9,6 +9,7 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\ValidationController;
 use App\Http\Controllers\CollectionController;
 use Illuminate\Support\Facades\Cache;
+use App\Http\Controllers\ProductController;
 use Illuminate\http\Request;
 /*
 |--------------------------------------------------------------------------
@@ -279,3 +280,13 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Route::get('product/create', ProductController::class, 'create')
+->name('product.create');
+
+
+
+
+Route::get('category/product/{product}', ProductController::class,'category')
+->name('category.product.delete');
