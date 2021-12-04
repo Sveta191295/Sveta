@@ -212,8 +212,16 @@ class ABCController extends Controller
             $user = Order::find(3)->user;
             dd($user->toArray());
 
+            $user = User::find(1);
+            $name = $user->name;
 
 
 }
+
+
+// public function user(int $id){
+//     $user=User:with('company')->find($id);    
+//     echo $user->full_name;
+// }
         
 }

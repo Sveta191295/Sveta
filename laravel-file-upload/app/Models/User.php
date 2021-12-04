@@ -41,33 +41,4 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-
-    public function account()    
-    {
-        return $this->hasOne('App\Models\Account');
-        
-    }
-
-    public function orders(){
-        return $this->hasMany(Order::class,
-    );
-}
-
-    public function company(){
-        return $this->belongsTo(Company::class,'company_id');
-    }
-
-
-    public function getNameAttribute($value){  
-        return ucfirst($value);
-    }
-
-
-    public function getFullNameAttribute()
-    {
-        return "{$this->name} {$this->company_id}";
-    }
-
-
 }
