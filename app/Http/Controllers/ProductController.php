@@ -2,40 +2,101 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Models\Category;
-
 use App\Models\Product;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function create(Request $request)
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        $product = new Product;
-        $product->name = 'God of War';
-        $product->price = 40;
-
-        $product->save();
-
-        $category = Category::find([3, 4]);
-        $product->categories()->attach($category);
-
-        return 'Success';
+        $products = Product::latest()->paginate(5);
+        return view('products.index',compact('products'))
+                ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('products.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'detail' => 'required',
+        ]);
+
+        Product::create($request->all());
+        return redirect()->route('products.index')
+               ->with('success','Product created successfully.');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Product  $product
+     * @return \Illuminate\Http\Response
+     */
     public function show(Product $product)
-    {   
-        return view('product.show', compact('product'));
+    {
+        return view('products.show',compact('product'));
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Product $product)
+    {
+        return view('products.edit',compact('product'));
+    }
 
-    public function removeCategory(Product $product)
-{
-        $category = Category::find(3);
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Product $product)
+    {
+        $request->validate([
+            'name' => 'required',
+            'detail' => 'required',
+        ]);
+        $product->update($request->all());
+        return redirect()->route('products.index')
+               ->with('success','Product updated successfully');
+    }
 
-        $product->categories()->detach($category);
-        
-        return 'Success';
-}
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Product $product)
+    {
+        $product->delete();
+        return redirect()->route('products.index')
+                ->with('success','Product deleted successfully');
+    }
 }
